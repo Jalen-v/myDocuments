@@ -1,0 +1,43 @@
+1、查看ubuntu系统信息
+	
+	df -h  查看磁盘空间
+	du -sh /* 统计文件或文件夹的大小
+
+	uname -a   
+	cat /proc/version  
+	cat /etc/issue   
+	lsb_release -a   
+
+	free -mh    内存
+	cat /proc/cpuinfo    内存
+	lspci | grep VGA    显卡
+
+
+2、ubuntu 网络配置
+	
+	sudo vi /etc/network/interfaces
+
+	auto eth0
+	iface eth0 inet static
+		address 10.0.1.52
+		netmask 255.255.254.0
+		gateway 10.0.0.1
+		dns-nameservers 114.114.114.114
+
+	service networking restart
+
+3、centos网络配置
+	
+	vi /etc/sysconfig/network-scripts/ifcfg-eth0
+
+	service network restart
+
+4、ubuntu下载源地址
+
+	/etc/apt/sourcces.list
+
+	sudo apt-get update 更新源
+	sudo apt-get upgrade 升级软件
+
+	sudo apt-get installer -f 解决依赖关系
+	
