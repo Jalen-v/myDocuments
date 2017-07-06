@@ -77,6 +77,28 @@ author:jinliang.sun
 	% nmcli con modify br0 ipv4.dns 114.114.114.114
 
 
+五、挂载nbd驱动（将nbd驱动挂载到本机，以进行读写操作）
+	
+（1）	% cd /opt/pyd
+	% lsmod | grep pyd （查看是否存在pyd，若不存在就执行2）
+	% ./pyd-client 10.0.0.55 1234 /dev/pyd0  
+			DriverContainer的驱动地址 与 驱动端口
+	
+	% fio -filename=/dev/pyd0 -direct=1 -iodepth 128 -thread -rw=randrw -rwmixread=70 -ioengine=libaio -bs=8k -numjobs=1 -runtime=1000  -name=mytest -size=2G
+
+	% ./pyd-client -f /dev/pyd0 (断开连接)
+
+（2）	% 从pengyun-main中copy pengyun-nbd-client
+	% cd pengyun-nbd-client/kernel/ver-1.1.2
+	% ./make
+	% cp pyd.ko /opt/pyd
+	% cd /opt/pyd
+	% insmod pyd.ko(加载内核，会有提示信息)
+	% lsmod | grep pyd
+	% ./pyd-client 10.0.0.55 1234 /dev/pyd0 (若失败，就从其它主机copy一份)
+
+
+
 
 
 
