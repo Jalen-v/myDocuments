@@ -1,0 +1,101 @@
+ZettaStor项目构建与安装部署简明教程(2017.07.06)
+author:jinliang.sun
+
+一、项目构建
+1、clone code from github repository:
+
+	git clone git@server7:main/pengyun-main.git
+	git clone git@server7:main/pengyun-datanode_binary.git
+
+	cd pengyun-main/
+	git submodule init
+
+	//pull all codes from each submodule
+	git submodule update
+
+	// Switch branches of all submodule to their master branches
+	git checkout CS
+	git submodule foreach git checkout CS
+
+	//pull all codes again to ensure we get the latest codes
+	git submodule foreach git pull
+
+
+2、Build the project
+	mvn clean install
+	or if there are errors with the unit tests
+	mvn clean install -DskipTests
+
+
+3、可能出现的问题：
+	1.未安装protobuf
+	     how to install protocol buffer
+		1, cp <pengyun-main>/resource/packages/protobuf-2.6.1.tar.gz /usr/local
+		2, cd /usr/local
+		3, tar -xvf ./protobuf-2.6.1.tar.gz
+		4, cd protobuf-2.6.1
+		5, ./configure --prefix=/usr
+		6, make
+		7, sudo make install
+	2.确保jdk、maven、thrift都已安装好，相关安装包去10.0.2.205下载
+		ssh py_ops@10.0.2.205
+		pengyun
+
+
+
+二、项目安装与部署
+1、生成安装包  pengyun-deploy-internal[2017-07-06_08-57-48].tar.gz
+	% cd pengyun-main
+	% bin/CreateDeployPackage.pl -d /tmp
+	% tar -zxvf pengyun-deploy-internal[2017-07-06_08-57-48].tar.gz -C ~/
+
+2、修改三个配置文件
+
+
+3、安装部署
+	% bin/make-perl-lib.pl
+	% bin/deploy.pl -o deploy
+	% bin/zookeeper.pl
+	% bin/daemonClient.pl –c deploy:all
+
+	% bin/update_system_config.pl
+
+
+
+三、给KVM虚机加磁盘
+
+	% fallocate -l 15G /data1/kvm/vm6/add_storage.img  
+	% virsh attach-disk vm55 /data1/kvm/vm7/add_storage.img vdb --persistent   
+
+	%lsblk
+
+
+四、网卡信息修改
+
+	% nmcli con show
+	% nmcli con show br0 | less
+	% nmcli con modify br0 ipv4.dns 114.114.114.114
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
