@@ -1,0 +1,12 @@
+1、jdk.chm
+
+
+两种在制定时间后启动线程的方法（ScheduledThreadPoolExecutor、DelayQueue）:
+2、java.util.concurrent.ScheduledThreadPoolExecutor
+3、java.util.concurrent.DelayQueue
+	指定延迟时间，延迟时间到了之后才能从队列取元素；
+	但是size()的结果仍然是队列中所有的task数，不受延迟时间的影响；
+
+
+
+
