@@ -1,0 +1,73 @@
+1、安装与配置
+	sudo apt-get install git 
+		git的安装
+	git config --global user.name "your name"
+	git config --global user.email "your email"
+		配置本机器进行git提交时的用户
+
+2、基本提交过程
+	git clone git@10.0.1.207:main/pengyun-main.git
+	git add .
+	git commit -m ""
+	git push origin master
+		origin 表示远端仓库，如git@10.0.1.207:main/pengyun-main.git
+	git diff 查看工作区和暂存区的差别
+
+3、查看历史版本与版本回退
+	git log		查看历史提交
+	git log --pretty=oneline
+	git reset --hard HEAD|commitId		版本切换
+		HEAD表示当前版本，HEAD^表示上一个版本，HEAD^^表示上上个版本，HEAD~100表示往上100个版本
+	git reflog	查看历史命令
+
+4、撤销修改
+	git checkout --file	丢弃工作区的修改，回到最近一次add或commit的状态
+	git reset HEAD file	撤销暂存区的修改，将修改重新放回工作区
+	如果修改提交到了本地仓库，使用git reset --hard commitId进行版本回退
+	如果修改push到了远端仓库，那就没法了......
+
+5、删除文件
+	git rm test.txt		从暂存区删除该文件
+	git commit -m "remove test.txt"		从本地仓库删除该文件
+
+6、远程仓库gitHub
+	添加ssh的公钥到github，目的是设置允许哪些用于可以push代码到我的github仓库，否则任何人都可以随意push的话，那就乱了
+	创建远程仓库
+	要关联远程仓库有两种方法：
+		git clone git@github.com:Jalen-v/test3.git
+
+		git remote add origin git@github.com:Jalen-v/test3.git（要先cd到本地仓库，关联之后第一次push使用git push -u origin master）
+
+7、创建与合并分支
+	git branch 查看分支
+	git branch <name> 创建分支
+	git checkout <name>  切换分支
+	git checkout -b <name> 创建+切换分支
+	git merge <name> 合并某分支到当前分支
+	git branch -d <name> 删除分支
+	git branch -D <name> 强行删除一个没有被合并过的分支
+
+
+8、查看分支合并情况
+	git merge --no-ff -m "merge with no-ff" dev	（合并分支，并创建一个新的commit，--no-ff参数就可以用普通模式合并，而非fast forward）
+	git log --graph --pretty=oneline --abbrev-commit	（--graph查看分支合并图）
+
+
+9、暂存
+	git stash
+	git stash list
+	git stash pop
+
+10、其他
+	git remote 查看远程库的信息
+	git remote -v 显示更详细的信息
+
+	git push origin branch-name 如果push失败，先用git pull 抓取远程新的提交
+	在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+	建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+	从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+
+
+		
+
+	
