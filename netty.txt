@@ -1,0 +1,19 @@
+netty API
+
+1、BootStrap: 引导程序
+
+2、ChannelInboundHandler: 用来接收消息，返回消息（write/flush），业务逻辑的生命周期在ChannelInboundHandler中；
+
+	Netty连接客户端端或绑定服务器需要知道如何发送或接收消息,这是通过不同类型的handlers来做的
+
+3、ChannelInitializer
+	多个Handlers是怎么配置的?Netty提供了ChannelInitializer类用来配置Handlers；
+
+4、ChannelPipeline
+	ChannelInitializer是通过ChannelPipeline来添加ChannelHandler的,如发送和接收消息,这些Handlers将确定发的是什么消息。
+
+
+Netty中所有的IO操作都是异步执行的,例如你连接一个主机默认是异步完成的;写入/发送消息也是同样是异步。也就是说操作不会直接执行,
+而是会等一会执行,因为你不知道返回的操作结果是成功还是失败,但是需要有检查是否成功的方法或者是注册监听来通知;Netty使用Futures和
+ChannelFutures来达到这种目的。Future注册一个监听,当操作成功或失败时会通知。ChannelFuture封装的是一个操作的相关信息,操作被执行时会
+立刻返回ChannelFuture。
